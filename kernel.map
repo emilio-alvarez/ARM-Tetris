@@ -1,0 +1,276 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD build/valuePack.o
+LOAD build/jtag.o
+LOAD build/framebuffer.o
+LOAD build/RNG.o
+LOAD build/Draw.o
+LOAD build/MenuGameBackgroundASCII.o
+LOAD build/ShapesASCII.o
+LOAD build/main.o
+LOAD build/CheckShapes.o
+LOAD build/NumberASCII.o
+LOAD build/SNEScontroller.o
+LOAD build/GameFunctions.o
+LOAD build/MenuOptionsASCII.o
+
+.init           0x00008000        0x4
+ *(.init)
+ .init          0x00008000        0x4 build/main.o
+                0x00008000                _start
+
+.data           0x00009080   0x485ec4
+ *(.data)
+ .data          0x00009080        0x0 build/valuePack.o
+ .data          0x00009080        0x0 build/jtag.o
+ .data          0x00009080       0x70 build/framebuffer.o
+                0x000090e0                FrameBufferPointer
+ .data          0x000090f0        0x4 build/RNG.o
+ *fill*         0x000090f4        0xc 3f3f3f3f
+ .data          0x00009100      0x850 build/Draw.o
+                0x00009100                IShapeGrid
+                0x00009110                JShapeGrid
+                0x00009119                LShapeGrid
+                0x00009122                OShapeGrid
+                0x0000912b                ZShapeGrid
+                0x00009134                TShapeGrid
+                0x0000913d                SShapeGrid
+ .data          0x00009950   0x2fe404 build/MenuGameBackgroundASCII.o
+                0x00009950                MenuBackground
+                0x00188b52                GameBackground
+ .data          0x00307d54     0x4800 build/ShapesASCII.o
+                0x00307d54                blackOut
+                0x00308554                ValuePack
+                0x00308d54                ZShape
+                0x00309554                TShape
+                0x00309d54                SShape
+                0x0030a554                OShape
+                0x0030ad54                LShape
+                0x0030b554                JShape
+                0x0030bd54                IShape
+ .data          0x0030c554        0x0 build/main.o
+ .data          0x0030c554        0x0 build/CheckShapes.o
+ .data          0x0030c554     0xd408 build/NumberASCII.o
+                0x0030c554                special
+                0x0031495c                Score9
+                0x0031515c                Score8
+                0x0031595c                Score7
+                0x0031615c                Score6
+                0x0031695c                Score5
+                0x0031715c                Score4
+                0x0031795c                Score3
+                0x0031815c                Score2
+                0x0031895c                Score1
+                0x0031915c                Score0
+ .data          0x0031995c        0x4 build/SNEScontroller.o
+ .data          0x00319960      0x100 build/GameFunctions.o
+                0x00319a40                ScoreASCII
+                0x00319a50                TimeToWait
+ .data          0x00319a60   0x1754e4 build/MenuOptionsASCII.o
+                0x00319a60                GameWon
+                0x003c1d46                GameOver
+                0x0046a02c                RestartGameSelected
+                0x0046c8cc                RestartGame
+                0x0046f16c                PauseFrame
+                0x00484cc4                StartGameSelected
+                0x00487564                StartGame
+                0x00489e04                QuitGame
+                0x0048c6a4                QuitGameSelected
+ *.c.o(*)
+
+.igot.plt       0x0048ef44        0x0
+ .igot.plt      0x00000000        0x0 build/valuePack.o
+
+.text           0x0048ef44     0x1e6c
+ *.c.o(.text)
+ *(.text)
+ .text          0x0048ef44      0x208 build/valuePack.o
+                0x0048ef44                SpawnValuePack
+                0x0048f02c                leftPressValueCheck
+                0x0048f0b4                rightPressValueCheck
+ .text          0x0048f14c       0x8c build/jtag.o
+                0x0048f14c                EnableJTAG
+ .text          0x0048f1d8       0x80 build/framebuffer.o
+                0x0048f1d8                InitFrameBuffer
+ .text          0x0048f258       0x74 build/RNG.o
+                0x0048f258                RNG
+ .text          0x0048f2cc      0x544 build/Draw.o
+                0x0048f2cc                DrawScore
+                0x0048f414                eraseBlock
+                0x0048f470                drawBlock
+                0x0048f4d0                DrawMainMenu
+                0x0048f4f4                DrawGameBackground
+                0x0048f554                DrawGameBounds
+                0x0048f5a0                clearScreen
+                0x0048f5ec                DrawGameOver
+                0x0048f610                DrawGameWon
+                0x0048f634                DrawRestartGame
+                0x0048f658                DrawRestartGameSelected
+                0x0048f67c                DrawPauseFrame
+                0x0048f6a0                DrawStartGameSelected
+                0x0048f6c4                DrawStartGame
+                0x0048f6e8                DrawQuitGame
+                0x0048f70c                DrawQuitGameSelected
+                0x0048f730                DrawSpecial
+ .text          0x0048f810        0x0 build/MenuGameBackgroundASCII.o
+ .text          0x0048f810        0x0 build/ShapesASCII.o
+ .text          0x0048f810       0xa8 build/main.o
+                0x0048f834                MenuScreen
+                0x0048f888                StartGameLoop
+                0x0048f894                LostGame
+                0x0048f89c                WonGame
+ .text          0x0048f8b8      0x488 build/CheckShapes.o
+                0x0048f8b8                CheckShape
+                0x0048fa7c                DrawBlock
+                0x0048fae0                DrawPixel
+                0x0048fb00                CheckColour
+                0x0048fbac                GetGrid
+                0x0048fbf0                ClearShape
+ .text          0x0048fd40        0x0 build/NumberASCII.o
+ .text          0x0048fd40      0x544 build/SNEScontroller.o
+                0x0048fd40                ReadButtons
+                0x0048fd9c                ReadGameButtons
+                0x004900b4                Init_GPIO
+                0x00490178                ReadSNES
+                0x004901f4                Wait
+ .text          0x00490284      0xb2c build/GameFunctions.o
+                0x00490284                gameLoop
+                0x004902d8                checkBreak
+                0x00490374                pauseMidGame
+                0x00490494                addToState
+                0x004904c8                clearFromState
+                0x004904fc                checkABox
+                0x00490654                potentialArray
+                0x00490954                collisionCheckLeft
+                0x00490990                collisionCheckRight
+                0x00490ab4                CheckRotatingShape
+                0x00490b7c                UnRotateShape
+                0x00490c44                resetState
+                0x00490c68                ConvertScoreToDigits
+                0x00490d18                IncrementScore
+ .text          0x00490db0        0x0 build/MenuOptionsASCII.o
+OUTPUT(build/output.elf elf32-littlearm)
+
+.glue_7         0x00490db0        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x00490db0        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x00490db0        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00490db0        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x00490db0        0x0
+ .iplt          0x00000000        0x0 build/valuePack.o
+
+.rel.dyn        0x00490db0        0x0
+ .rel.iplt      0x00000000        0x0 build/valuePack.o
+
+.bss            0x00490db0        0x0
+ .bss           0x00490db0        0x0 build/valuePack.o
+ .bss           0x00490db0        0x0 build/jtag.o
+ .bss           0x00490db0        0x0 build/framebuffer.o
+ .bss           0x00490db0        0x0 build/RNG.o
+ .bss           0x00490db0        0x0 build/Draw.o
+ .bss           0x00490db0        0x0 build/MenuGameBackgroundASCII.o
+ .bss           0x00490db0        0x0 build/ShapesASCII.o
+ .bss           0x00490db0        0x0 build/main.o
+ .bss           0x00490db0        0x0 build/CheckShapes.o
+ .bss           0x00490db0        0x0 build/NumberASCII.o
+ .bss           0x00490db0        0x0 build/SNEScontroller.o
+ .bss           0x00490db0        0x0 build/GameFunctions.o
+ .bss           0x00490db0        0x0 build/MenuOptionsASCII.o
+
+.ARM.attributes
+                0x00000000       0x29
+ .ARM.attributes
+                0x00000000       0x29 build/valuePack.o
+ .ARM.attributes
+                0x00000029       0x29 build/jtag.o
+ .ARM.attributes
+                0x00000052       0x29 build/framebuffer.o
+ .ARM.attributes
+                0x0000007b       0x29 build/RNG.o
+ .ARM.attributes
+                0x000000a4       0x29 build/Draw.o
+ .ARM.attributes
+                0x000000cd       0x29 build/MenuGameBackgroundASCII.o
+ .ARM.attributes
+                0x000000f6       0x29 build/ShapesASCII.o
+ .ARM.attributes
+                0x0000011f       0x29 build/main.o
+ .ARM.attributes
+                0x00000148       0x29 build/CheckShapes.o
+ .ARM.attributes
+                0x00000171       0x29 build/NumberASCII.o
+ .ARM.attributes
+                0x0000019a       0x29 build/SNEScontroller.o
+ .ARM.attributes
+                0x000001c3       0x29 build/GameFunctions.o
+ .ARM.attributes
+                0x000001ec       0x29 build/MenuOptionsASCII.o
+
+.debug_line     0x00000000      0xa5d
+ .debug_line    0x00000000       0xc6 build/valuePack.o
+ .debug_line    0x000000c6       0x61 build/jtag.o
+ .debug_line    0x00000127       0x67 build/framebuffer.o
+ .debug_line    0x0000018e       0x58 build/RNG.o
+ .debug_line    0x000001e6      0x1b5 build/Draw.o
+ .debug_line    0x0000039b       0x75 build/main.o
+ .debug_line    0x00000410      0x177 build/CheckShapes.o
+ .debug_line    0x00000587      0x1a3 build/SNEScontroller.o
+ .debug_line    0x0000072a      0x333 build/GameFunctions.o
+
+.debug_info     0x00000000      0x435
+ .debug_info    0x00000000       0x79 build/valuePack.o
+ .debug_info    0x00000079       0x74 build/jtag.o
+ .debug_info    0x000000ed       0x7b build/framebuffer.o
+ .debug_info    0x00000168       0x73 build/RNG.o
+ .debug_info    0x000001db       0x74 build/Draw.o
+ .debug_info    0x0000024f       0x70 build/main.o
+ .debug_info    0x000002bf       0x7b build/CheckShapes.o
+ .debug_info    0x0000033a       0x7e build/SNEScontroller.o
+ .debug_info    0x000003b8       0x7d build/GameFunctions.o
+
+.debug_abbrev   0x00000000       0xb2
+ .debug_abbrev  0x00000000       0x14 build/valuePack.o
+ .debug_abbrev  0x00000014       0x14 build/jtag.o
+ .debug_abbrev  0x00000028       0x14 build/framebuffer.o
+ .debug_abbrev  0x0000003c       0x14 build/RNG.o
+ .debug_abbrev  0x00000050       0x14 build/Draw.o
+ .debug_abbrev  0x00000064       0x12 build/main.o
+ .debug_abbrev  0x00000076       0x14 build/CheckShapes.o
+ .debug_abbrev  0x0000008a       0x14 build/SNEScontroller.o
+ .debug_abbrev  0x0000009e       0x14 build/GameFunctions.o
+
+.debug_aranges  0x00000000      0x128
+ .debug_aranges
+                0x00000000       0x20 build/valuePack.o
+ .debug_aranges
+                0x00000020       0x20 build/jtag.o
+ .debug_aranges
+                0x00000040       0x20 build/framebuffer.o
+ .debug_aranges
+                0x00000060       0x20 build/RNG.o
+ .debug_aranges
+                0x00000080       0x20 build/Draw.o
+ .debug_aranges
+                0x000000a0       0x28 build/main.o
+ .debug_aranges
+                0x000000c8       0x20 build/CheckShapes.o
+ .debug_aranges
+                0x000000e8       0x20 build/SNEScontroller.o
+ .debug_aranges
+                0x00000108       0x20 build/GameFunctions.o
+
+.debug_ranges   0x00000000       0x20
+ .debug_ranges  0x00000000       0x20 build/main.o
