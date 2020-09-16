@@ -2,6 +2,8 @@
 
 A slightly modified version of Tetris for the Raspbery Pi 2 Model B, written using ARMv7 Assembly.
 
+Developed as a group for CPSC 359 at University of Calgary.
+
 ![Main Menu](assets/TetrisMenuBackground.png)
 
 ## Build / Run
